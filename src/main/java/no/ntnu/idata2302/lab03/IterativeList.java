@@ -44,6 +44,7 @@ public class IterativeList<T> extends Sequence<T> {
      */
     private INode<T> getNode(int index) throws InvalidIndex {
         // TODO: Implement this method
+        return null;
     }
 
     @Override

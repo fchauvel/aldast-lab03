@@ -108,6 +108,7 @@ class RNode<T> implements List<T> {
     @Override
     public List<T> insert (int index, T item) throws InvalidIndex {
         // TODO: Complete this method
+        return null;
     }
 
     @Override
@@ -151,6 +152,7 @@ class Empty<T> implements List<T> {
     @Override
     public List<T> insert (int index, T item) throws InvalidIndex {
         // TODO: Complete this method
+        return null;
     }
 
     @Override
