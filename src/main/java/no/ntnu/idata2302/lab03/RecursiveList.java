@@ -107,8 +107,8 @@ class RNode<T> implements List<T> {
 
     @Override
     public List<T> insert (int index, T item) throws InvalidIndex {
-        // TODO: Complete this method
-        return null;
+        // TODO: Implement this method
+        throw new RuntimeException("Not yet implemented.");
     }
 
     @Override
@@ -151,8 +151,8 @@ class Empty<T> implements List<T> {
 
     @Override
     public List<T> insert (int index, T item) throws InvalidIndex {
-        // TODO: Complete this method
-        return null;
+        // TODO: Implement this method
+        throw new RuntimeException("Not yet implemented.");
     }
 
     @Override

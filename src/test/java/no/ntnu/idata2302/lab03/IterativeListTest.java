@@ -12,7 +12,7 @@ public class IterativeListTest extends SequenceTest {
 
     @Override
     public Sequence<Integer> emptySequence() {
-        return new RecursiveList();
+        return new IterativeList(null);
     }
 
 }

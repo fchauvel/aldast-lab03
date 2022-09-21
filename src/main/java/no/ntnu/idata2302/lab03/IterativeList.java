@@ -44,7 +44,7 @@ public class IterativeList<T> extends Sequence<T> {
      */
     private INode<T> getNode(int index) throws InvalidIndex {
         // TODO: Implement this method
-        return null;
+        throw new RuntimeException("Not yet implemented.");
     }
 
     @Override
@@ -56,6 +56,7 @@ public class IterativeList<T> extends Sequence<T> {
     @Override
     public void insert(int index, T item) throws InvalidIndex {
         // TODO: Implement this method
+        throw new RuntimeException("Not yet implemented.");
     }
 
 
