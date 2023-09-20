@@ -7,162 +7,106 @@
  */
 package no.ntnu.idata2302.lab03;
 
-
 /**
- * This class acts as an adapter that adjusts the API of the recursive
- * type to the sequence interface.
+ * Linked list implemented using recursion
  */
-public class RecursiveList<T> extends  Sequence<T> {
+public class RecursiveList<T> extends Sequence<T> {
 
-    private List<T> head;
+    private RNode<T> head;
 
-    public RecursiveList () {
+    public RecursiveList() {
         super();
-        this.head = new Empty<T>();
+        this.head = null;
     }
 
     @Override
     public int length() {
-        return head.length();
+        return lengthFrom(head);
+    }
+
+    private int lengthFrom(RNode<T> start) {
+        if (start == null)
+            return 0;
+        return 1 + lengthFrom(start.next);
     }
 
     @Override
-    public boolean isEmpty () {
+    public boolean isEmpty() {
         return length() == 0;
     }
 
     @Override
     public T get(int index) throws InvalidIndex {
-        return head.get(index);
+        return this.getNode(this.head, index).item;
+    }
+
+    private RNode<T> getNode(RNode<T> start, int index) throws InvalidIndex {
+        if (start == null)
+            throw new IllegalStateException("Empty List");
+        if (index <= 0)
+            throw new InvalidIndex(index);
+        if (index == 1)
+            return start;
+        if (start.next == null)
+            throw new InvalidIndex(index);
+        return getNode(start.next, index - 1);
     }
 
     @Override
     public void set(int index, T item) throws InvalidIndex {
-        head.set(index, item);
+        this.getNode(this.head, index).item = item;
     }
 
     @Override
     public void insert(int index, T item) throws InvalidIndex {
-        head = head.insert(index, item);
+        // TODO: Implement this operation
+        throw new RuntimeException("Not yet implemented.");
     }
 
     @Override
     public void remove(int index) throws InvalidIndex {
-        head = head.remove(index);
+        if (index < 1) throw new IllegalArgumentException("Invalid index");
+        removeAfter(head, index-1);
+    }
+
+    private void removeAfter(RNode<T> start, int index) throws InvalidIndex {
+        if (index == 0) {
+            head = start.next;
+
+        } else if (index == 1) {
+            start.next = start.next == null
+                ? null
+                : start.next.next;
+
+        } else if (index > 1) {
+            removeAfter(start.next, index-1);
+
+        } else {
+            throw new IllegalStateException("Cannot remove: Broken chain.");
+        }
     }
 
     @Override
     public int search(T item) {
-        return  head.search(item);
+        return searchFrom(head, item, 1);
+    }
+
+    private int searchFrom(RNode<T> start, T item, int index) {
+        if (start == null) return 0;
+        if (start.item == item) return index;
+        return searchFrom(start.next, item, index+1);
     }
 
 }
 
+class RNode<T> {
 
-interface List<T> {
+    T item;
+    RNode<T> next;
 
-    int length();
-
-    T get (int index) throws InvalidIndex;
-
-    void set(int index, T item) throws InvalidIndex;
-
-    List<T> insert (int index, T item) throws InvalidIndex;
-
-    List<T> remove (int index) throws InvalidIndex;
-
-    int search(T item);
-
-}
-
-
-class RNode<T> implements List<T> {
-
-    private T item;
-    private List<T> next;
-
-    RNode (T item, List<T> next) {
+    RNode(T item, RNode<T> next) {
         this.item = item;
         this.next = next;
-    }
-
-    @Override
-    public T get (int index) throws InvalidIndex {
-        if (index < 1) throw new InvalidIndex(index);
-        if (index == 1) return item;
-        return next.get(index-1);
-    }
-
-    @Override
-    public void set (int index, T newItem) throws InvalidIndex {
-        if (index < 1) throw new InvalidIndex(index);
-        if (index == 1) { item = newItem; return; }
-        next.set(index-1, newItem);
-    }
-
-    @Override
-    public int length () {
-        return 1 + next.length();
-    }
-
-    @Override
-    public List<T> insert (int index, T item) throws InvalidIndex {
-        // TODO: Implement this method
-        throw new RuntimeException("Not yet implemented.");
-    }
-
-    @Override
-    public List<T> remove (int index) throws InvalidIndex {
-        if (index < 1) throw new InvalidIndex(index);
-        if (index == 1) return next;
-        next = next.remove(index-1);
-        return this;
-    }
-
-    @Override
-    public int search (T item) {
-        if (this.item.equals(item)) return 1;
-        var result = next.search(item);
-        return result == 0 ? 0 : 1 + result;
-    }
-
-}
-
-
-
-class Empty<T> implements List<T> {
-
-    Empty() {}
-
-    @Override
-    public T get (int index) throws InvalidIndex {
-        throw new InvalidIndex(index);
-    }
-
-    @Override
-    public void set (int index, T newItem) throws InvalidIndex {
-        throw new InvalidIndex(index);
-    }
-
-    @Override
-    public int length () {
-        return 0;
-    }
-
-    @Override
-    public List<T> insert (int index, T item) throws InvalidIndex {
-        // TODO: Implement this method
-        throw new RuntimeException("Not yet implemented.");
-    }
-
-    @Override
-    public List<T> remove (int index) throws InvalidIndex {
-        throw new InvalidIndex(index);
-    }
-
-    @Override
-    public int search (T item) {
-        return 0;
     }
 
 }

@@ -7,14 +7,11 @@
  */
 package no.ntnu.idata2302.lab03;
 
-
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-
-public abstract class SequenceTest
-{
+public abstract class SequenceTest {
 
     private Sequence<Integer> sequence;
 
@@ -22,7 +19,7 @@ public abstract class SequenceTest
 
     public Sequence<Integer> fromArray(Integer... array) {
         var sequence = emptySequence();
-        for(var each: array) {
+        for (var each : array) {
             sequence.append(each);
         }
         return sequence;
@@ -30,9 +27,8 @@ public abstract class SequenceTest
 
     @Before
     public void setUp() {
-        this.sequence = fromArray(1,2,3,4);
+        this.sequence = fromArray(1, 2, 3, 4);
     }
-
 
     @Test
     public void emptySequenceHasLengthZero() {
@@ -42,22 +38,22 @@ public abstract class SequenceTest
     }
 
     @Test
-    public void getReturnsTheItemAtIndex () throws InvalidIndex {
+    public void getReturnsTheItemAtIndex() throws InvalidIndex {
         assertEquals((Integer) 3, sequence.get(3));
     }
 
-    @Test(expected=InvalidIndex.class)
-    public void getRejectsZeroIndex () throws InvalidIndex {
+    @Test(expected = InvalidIndex.class)
+    public void getRejectsZeroIndex() throws InvalidIndex {
         sequence.get(0);
     }
 
-    @Test(expected=InvalidIndex.class)
-    public void getRejectsIndexBeyondLength () throws InvalidIndex {
+    @Test(expected = InvalidIndex.class)
+    public void getRejectsIndexBeyondLength() throws InvalidIndex {
         sequence.get(5);
     }
 
     @Test
-    public void setUpdateItemByIndex () throws InvalidIndex {
+    public void setUpdateItemByIndex() throws InvalidIndex {
         sequence.set(3, 0);
         assertEquals((Integer) 0, sequence.get(3));
     }
@@ -66,7 +62,7 @@ public abstract class SequenceTest
     public void insertIncreaseLengthByOne() throws InvalidIndex {
         var length = sequence.length();
         sequence.insert(1, 0);
-        assertEquals(length+1, sequence.length());
+        assertEquals(length + 1, sequence.length());
     }
 
     @Test
@@ -86,7 +82,7 @@ public abstract class SequenceTest
     @Test
     public void appendingFromScratchShouldBuildaList() throws InvalidIndex {
         var sequence = emptySequence();
-        for(int i=1 ; i<5; i++) {
+        for (int i = 1; i < 5; i++) {
             sequence.append(i);
         }
         assertEquals((Integer) 1, sequence.get(1));
@@ -98,7 +94,7 @@ public abstract class SequenceTest
     @Test
     public void prependingFromScratchShouldReverseTheList() throws InvalidIndex {
         var sequence = emptySequence();
-        for(int i=1 ; i<5; i++) {
+        for (int i = 1; i < 5; i++) {
             sequence.prepend(i);
         }
         assertEquals((Integer) 4, sequence.get(1));
@@ -116,14 +112,13 @@ public abstract class SequenceTest
     }
 
     @Test
-    public void searchReturnsZeroWhenNotFound () {
+    public void searchReturnsZeroWhenNotFound() {
         var index = sequence.search(7);
         assertEquals(0, index);
     }
 
-
     @Test
-    public void searchReturnsAnIndexWhereItemIs () throws InvalidIndex {
+    public void searchReturnsAnIndexWhereItemIs() throws InvalidIndex {
         var index = sequence.search(4);
         assertEquals((Integer) 4, sequence.get(index));
     }
